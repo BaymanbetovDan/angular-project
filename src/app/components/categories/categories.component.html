@@ -1,0 +1,33 @@
+<div class="p-4 shadow rounded grid">
+    <div>
+        <!-- Categories -->
+        <div class="flex flex-wrap items-center gap-2 mb-2">
+            <!-- Category item -->
+            <div *ngFor="let category of this.categoryService.categoriesSig()"
+                class="flex py-2 px-8 bg-blue-600 text-xs text-white relative">
+                <p>{{category.title}}</p>
+
+                <button (click)="edit(category.id, category.title)" class="absolute left-2">
+                    <fa-icon [icon]="editIcon"></fa-icon>
+                </button>
+
+                <button (click)="delete(category.id)" class="absolute right-2">
+                    <fa-icon [icon]="removeIcon"></fa-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Category form -->
+    <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+        <input type="text" placeholder="Category name" class="input flex w-full" formControlName="title" required>
+        <button [disabled]="!this.categoryForm.valid" type="submit" [ngClass]="{
+            'btn-green': method === 'create',
+            'bg-amber-400': method === 'update'
+        }" class="btn mt-2 w-full justify-center">
+            <span *ngIf="method === 'create' ">Create</span>
+            <span *ngIf="method === 'update' ">Update</span>
+        </button>
+    </form>
+
+</div>
